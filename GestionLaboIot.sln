@@ -127,7 +127,7 @@ Global
 		{003FF59B-FD4E-4924-BF15-E4CC804AB869}.AppStore|iPhoneSimulator.Build.0 = AppStore|iPhoneSimulator
 		{003FF59B-FD4E-4924-BF15-E4CC804AB869}.AppStore|x64.ActiveCfg = AppStore|iPhone
 		{003FF59B-FD4E-4924-BF15-E4CC804AB869}.AppStore|x86.ActiveCfg = AppStore|iPhone
-		{003FF59B-FD4E-4924-BF15-E4CC804AB869}.Debug|Any CPU.ActiveCfg = Debug|iPhone
+		{003FF59B-FD4E-4924-BF15-E4CC804AB869}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
 		{003FF59B-FD4E-4924-BF15-E4CC804AB869}.Debug|ARM.ActiveCfg = Debug|iPhone
 		{003FF59B-FD4E-4924-BF15-E4CC804AB869}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{003FF59B-FD4E-4924-BF15-E4CC804AB869}.Debug|iPhone.Build.0 = Debug|iPhone
@@ -143,6 +143,7 @@ Global
 		{003FF59B-FD4E-4924-BF15-E4CC804AB869}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{003FF59B-FD4E-4924-BF15-E4CC804AB869}.Release|x64.ActiveCfg = Release|iPhone
 		{003FF59B-FD4E-4924-BF15-E4CC804AB869}.Release|x86.ActiveCfg = Release|iPhone
+		{003FF59B-FD4E-4924-BF15-E4CC804AB869}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
 		{CD75A20C-1AEF-4514-9BAE-3D55F9C7352A}.Ad-Hoc|Any CPU.ActiveCfg = Release|x86
 		{CD75A20C-1AEF-4514-9BAE-3D55F9C7352A}.Ad-Hoc|Any CPU.Build.0 = Release|x86
 		{CD75A20C-1AEF-4514-9BAE-3D55F9C7352A}.Ad-Hoc|Any CPU.Deploy.0 = Release|x86
@@ -257,5 +258,10 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B8521D97-7D9B-4E08-861D-1FB0FC52F048}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
 	EndGlobalSection
 EndGlobal

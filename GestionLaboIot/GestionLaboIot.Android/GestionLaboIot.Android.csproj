@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>GestionLaboIot.Droid</RootNamespace>
     <AssemblyName>GestionLaboIot.Android</AssemblyName>
-    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
@@ -28,9 +28,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
-    <AotAssemblies>false</AotAssemblies>
-    <EnableLLVM>false</EnableLLVM>
-    <BundleAssemblies>false</BundleAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -93,7 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GestionLaboIot\GestionLaboIot.csproj">
-      <Project>{CE1FD000-5255-4D08-A39C-E9793DC44860}</Project>
+      <Project>{79E23CA5-8765-4946-8AA3-C8804A6A6022}</Project>
       <Name>GestionLaboIot</Name>
     </ProjectReference>
   </ItemGroup>

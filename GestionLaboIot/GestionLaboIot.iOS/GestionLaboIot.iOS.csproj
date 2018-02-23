@@ -133,7 +133,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\GestionLaboIot\GestionLaboIot.csproj">
-      <Project>{CE1FD000-5255-4D08-A39C-E9793DC44860}</Project>
+      <Project>{79E23CA5-8765-4946-8AA3-C8804A6A6022}</Project>
       <Name>GestionLaboIot</Name>
     </ProjectReference>
   </ItemGroup>
