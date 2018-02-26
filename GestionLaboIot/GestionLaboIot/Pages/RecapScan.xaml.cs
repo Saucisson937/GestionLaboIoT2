@@ -6,38 +6,53 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using ZXing.Net.Mobile.Forms;
 
 namespace GestionLaboIot.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class RecapScan : ContentPage
 	{
+		ZXingScannerPage scanPage;
 		public RecapScan ()
 		{
 			InitializeComponent ();
-			button_Valid.Clicked += Button_Valid_Clicked;
+			button_Valid.Clicked += Button_Valid_ClickedAsync;
 			button_minus.Clicked += Button_minus_Clicked;
 			button_plus.Clicked += Button_plus_Clicked;
 		}
 
 		private void Button_plus_Clicked(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
+			//Faire +1 sur le label quantité (et donc -1 sur la quantité restante)
 		}
 
 		private void Button_minus_Clicked(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
+			//Faire -1 sur le label quantité (et donc +1 sur la quantité restante)
 		}
 
-		private void Button_Valid_Clicked1(object sender, EventArgs e)
+		private async void Button_Valid_ClickedAsync(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
-		}
+			var nouveauScan = await DisplayAlert("Envoyé", "Données envoyées. Voulez-vous scanner un autre objet ?","Oui","Non");
+			if (nouveauScan)
+			{
+				scanPage = new ZXingScannerPage();
+				scanPage.OnScanResult += (result) => {
+					scanPage.IsScanning = false;
 
-		private void Button_Valid_Clicked(object sender, EventArgs e)
-		{
-			throw new NotImplementedException();
+					Device.BeginInvokeOnMainThread(() => {
+						Navigation.PopModalAsync();
+						Navigation.PushModalAsync(new RecapScan());
+					});
+				};
+				await Navigation.PushModalAsync(scanPage);
+			}
+			else
+			{
+				await Navigation.PushModalAsync(new StudentMail());
+			}
+			
 		}
 	}
 }

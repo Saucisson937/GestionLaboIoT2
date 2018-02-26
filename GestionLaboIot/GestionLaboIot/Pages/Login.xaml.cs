@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -21,7 +23,15 @@ namespace GestionLaboIot
 
 		private async void Button_Valid_ClickedAsync(object sender, EventArgs e)
 		{
-			await Navigation.PushModalAsync(new StudentMail());
+			if(!(String.IsNullOrEmpty(entry_Login.Text) || String.IsNullOrEmpty(entry_password.Text)))
+			{
+				await Navigation.PushModalAsync(new StudentMail());
+			}
+			else
+			{
+				await DisplayAlert("Attention", "Veuillez entrez vos identifiants de connexion","Ok");
+			}
+			
 		}
 	}
 }

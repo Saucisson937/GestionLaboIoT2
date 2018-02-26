@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using ZXing.Net.Mobile.Forms.iOS;
 using Foundation;
 using UIKit;
 
@@ -24,8 +24,8 @@ namespace GestionLaboIot.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
-
-            return base.FinishedLaunching(app, options);
+			Platform.Init();
+			return base.FinishedLaunching(app, options);
         }
     }
 }
