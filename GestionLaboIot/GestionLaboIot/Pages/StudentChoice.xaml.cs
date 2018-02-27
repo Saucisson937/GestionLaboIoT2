@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestionLaboIot.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,11 +16,18 @@ namespace GestionLaboIot.Pages
 	public partial class StudentChoice : ContentPage
 	{
 		ZXingScannerPage scanPage;
+		
 		public StudentChoice()
 		{
 			InitializeComponent();
 			button_emprunter.Clicked += Button_emprunter_ClickedAsync;
 			button_rendre.Clicked += Button_rendre_ClickedAsync;
+			button_Retour.Clicked += Button_Retour_ClickedAsync;
+		}
+
+		private async void Button_Retour_ClickedAsync(object sender, EventArgs e)
+		{
+			await Navigation.PopModalAsync();
 		}
 
 		private async void Button_rendre_ClickedAsync(object sender, EventArgs e)
@@ -33,11 +41,14 @@ namespace GestionLaboIot.Pages
 				};
 				var retour = new Button
 				{
-					Text = "Retour"
+					Image = "return64.png",
+					BackgroundColor = Color.Transparent
 				};
 				var torch = new Button
 				{
-					Text = "Flash"
+					Text = "Flash",
+					BackgroundColor = Color.Transparent,
+					FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label))
 				};
 
 				retour.Clicked += delegate
@@ -64,30 +75,65 @@ namespace GestionLaboIot.Pages
 						Navigation.PushModalAsync(new RecapScan());
 					});
 				};
-
 				await Navigation.PushModalAsync(scanPage);
 			}
 			catch (Exception ex)
 			{
-
 				await DisplayAlert("Erreur", ex.ToString(), "OK");
 			}			
 		}
 
 		private async void Button_emprunter_ClickedAsync(object sender, EventArgs e)
 		{
-			scanPage = new ZXingScannerPage();
-			scanPage.OnScanResult += (result) => {
-				scanPage.IsScanning = false;
+			try
+			{
+				var customOverlay = new StackLayout
+				{
+					HorizontalOptions = LayoutOptions.Start,
+					VerticalOptions = LayoutOptions.Start
+				};
+				var retour = new Button
+				{
+					Image = "return64.png",
+					BackgroundColor = Color.Transparent
+				};
+				var torch = new Button
+				{
+					Text = "Flash",
+					BackgroundColor = Color.Transparent,
+					FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label))
+				};
 
-				Device.BeginInvokeOnMainThread(() => {
+				retour.Clicked += delegate
+				{
 					Navigation.PopModalAsync();
-					Navigation.PushModalAsync(new RecapScan());
-					//DisplayAlert("Scanned Barcode", result.Text, "OK");
-				});
-			};
+				};
+				torch.Clicked += delegate {
+					scanPage.ToggleTorch();
+				};
 
-			await Navigation.PushModalAsync(scanPage);
+				customOverlay.Children.Add(retour);
+				customOverlay.Children.Add(torch);
+
+				scanPage = new ZXingScannerPage(customOverlay: customOverlay);
+
+				scanPage.OnScanResult += (result) =>
+				{
+					scanPage.IsScanning = false;
+
+					Device.BeginInvokeOnMainThread(() =>
+					{
+						Navigation.PopModalAsync();
+						//DisplayAlert("Scanned Barcode", result.Text, "OK");
+						Navigation.PushModalAsync(new RecapScan());
+					});
+				};
+				await Navigation.PushModalAsync(scanPage);
+			}
+			catch (Exception ex)
+			{
+				await DisplayAlert("Erreur", ex.ToString(), "OK");
+			}
 		}
 	}
 }

@@ -2,9 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GestionLaboIot.Pages.StudentChoice">
-
-	<StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Transparent" Spacing="50">
-		<Button x:Name="button_emprunter" Text="Emprunter" BackgroundColor="#E12D53" TextColor="White" FontSize="Large"/>
-		<Button x:Name="button_rendre" Text="Rendre" BackgroundColor="#E12D53" TextColor="White" FontSize="Large"/>
+	<StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
+		<Button x:Name="button_Retour" Image="return64.png"  HorizontalOptions="Start" BackgroundColor="Transparent"/>
+		<StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Transparent" Spacing="50">
+			<Button x:Name="button_emprunter" Text="Emprunter" BackgroundColor="#E12D53" TextColor="White" FontSize="Large"/>
+			<Button x:Name="button_rendre" Text="Rendre" BackgroundColor="#E12D53" TextColor="White" FontSize="Large"/>
+		</StackLayout>
 	</StackLayout>
 </ContentPage>

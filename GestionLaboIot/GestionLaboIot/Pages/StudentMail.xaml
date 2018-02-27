@@ -2,10 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GestionLaboIot.Pages.StudentMail">
-
-	<StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Transparent" >
-		<Label Text="Entrez une adresse mail Ynov :" FontSize="Medium" TextColor="Black"/>
-		<Entry x:Name="entry_Mail" Placeholder="prenom.nom@ynov.com"/>
-		<Button x:Name="button_ValidMail" Text="Valider" BackgroundColor="#E12D53" TextColor="White"/>
+	<StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
+		<Button x:Name="button_Retour" Image="return64.png"  HorizontalOptions="Start" BackgroundColor="Transparent"/>
+		<StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" BackgroundColor="Transparent" >
+			<Label Text="Entrez une adresse mail Ynov :" FontSize="Medium" TextColor="Black"/>
+			<Entry x:Name="entry_Mail" Placeholder="prenom.nom@ynov.com"/>
+			<Button x:Name="button_ValidMail" Text="Valider" BackgroundColor="#E12D53" TextColor="White"/>
+		</StackLayout>
 	</StackLayout>
 </ContentPage>

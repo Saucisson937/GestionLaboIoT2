@@ -20,6 +20,12 @@ namespace GestionLaboIot.Pages
 			button_Valid.Clicked += Button_Valid_ClickedAsync;
 			button_minus.Clicked += Button_minus_Clicked;
 			button_plus.Clicked += Button_plus_Clicked;
+			button_Retour.Clicked += Button_Retour_ClickedAsync;
+		}
+
+		private async void Button_Retour_ClickedAsync(object sender, EventArgs e)
+		{
+			await Navigation.PopModalAsync();
 		}
 
 		private void Button_plus_Clicked(object sender, EventArgs e)

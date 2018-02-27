@@ -18,6 +18,12 @@ namespace GestionLaboIot.Pages
 		{
 			InitializeComponent ();
 			button_ValidMail.Clicked += Button_ValidMail_ClickedAsync;
+			button_Retour.Clicked += Button_Retour_ClickedAsync;
+		}
+
+		private async void Button_Retour_ClickedAsync(object sender, EventArgs e)
+		{
+			await Navigation.PopModalAsync();
 		}
 
 		private async void Button_ValidMail_ClickedAsync(object sender, EventArgs e)
