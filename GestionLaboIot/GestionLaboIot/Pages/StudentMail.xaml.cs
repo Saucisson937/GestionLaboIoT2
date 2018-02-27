@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
 using System.Text.RegularExpressions;
-
+using RestSharp;
+using Newtonsoft;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,14 +17,24 @@ namespace GestionLaboIot.Pages
 	{
 		public StudentMail ()
 		{
-			InitializeComponent ();
-			button_ValidMail.Clicked += Button_ValidMail_ClickedAsync;
-			button_Retour.Clicked += Button_Retour_ClickedAsync;
+            if (Application.Current.Properties.ContainsKey("token"))
+            {
+
+                InitializeComponent();
+                button_ValidMail.Clicked += Button_ValidMail_ClickedAsync;
+                button_Retour.Clicked += Button_Retour_ClickedAsync;
+            }
+            else
+            {
+                Navigation.PushModalAsync(new Login());
+            }
+			
 		}
 
 		private async void Button_Retour_ClickedAsync(object sender, EventArgs e)
 		{
 			await Navigation.PopModalAsync();
+
 		}
 
 		private async void Button_ValidMail_ClickedAsync(object sender, EventArgs e)
@@ -32,8 +43,7 @@ namespace GestionLaboIot.Pages
 			{
 				entry_Mail.Text = entry_Mail.Text.Replace(" ", "").ToLower();// enleve les espaces blancs et met en minuscule
 
-				if(Regex.IsMatch(entry_Mail.Text, @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
-				@"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$")) //test si format mail valide
+                if(Regex.Match(entry_Mail.Text, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$").Success) //test si format mail valide
 				{
 					if (entry_Mail.Text.EndsWith("ynov.com")) //test si domaine = ynov.com
 					{
