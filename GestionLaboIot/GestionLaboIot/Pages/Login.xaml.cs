@@ -21,35 +21,9 @@ namespace GestionLaboIot
 		{
 			InitializeComponent ();
 
-
-            //var email = new Entry
-            //{
-            //    Placeholder = "Email"
-            //};
-
-            //var password = new Entry
-            //{
-            //    Placeholder = "Mot de passe",
-            //    IsPassword = true
-            //};
-
-            //var login = new Button
-            //{
-            //    Text = "Connexion"
-            //};
-
-
             login.Clicked += (sender, e) => {
                 Authenticate(email.Text, password.Text);
             };
-
-            //Content = new StackLayout
-            //{
-            //    Padding = 30,
-            //    Spacing = 10,
-            //    Children = { email, password, login }
-            //};
-
 		}
 
         public class LoginToken
@@ -61,31 +35,35 @@ namespace GestionLaboIot
 
         public void Authenticate(string email, string password)
         {
-            var client = new RestClient("http://localhost:3000/");
-            var request = new RestRequest("users/authenticate", Method.POST);
-            request.AddParameter("email", email);
-            request.AddParameter("password", password);
-            request.AddParameter("grant_type", "password");
-            request.AddParameter("scope", "openid");
+			if (!(String.IsNullOrEmpty(email) && String.IsNullOrEmpty(password)))
+			{
+				var client = new RestClient("http://localhost:3000/");
+				var request = new RestRequest("users/authenticate", Method.POST);
+				request.AddParameter("email", email);
+				request.AddParameter("password", password);
+				request.AddParameter("grant_type", "password");
+				request.AddParameter("scope", "openid");
 
+				IRestResponse response = client.Execute(request);
+				Console.WriteLine(request);
+				LoginToken loginToken = JsonConvert.DeserializeObject<LoginToken>(response.Content);
 
-            IRestResponse response = client.Execute(request);
-            Console.WriteLine(request);
-            LoginToken token = JsonConvert.DeserializeObject<LoginToken>(response.Content);
-
-            if (token.token != null)
-            {
-                Application.Current.Properties["success"] = token.success;
-                Application.Current.Properties["token"] = token.token;
-                Navigation.PushModalAsync(new StudentMail());
-            }
-            else
-            {
-                DisplayAlert("Erreur !", "Les informations saisies sont incorrects", "OK");
-            };
+				if (loginToken.token != null)
+				{
+					Application.Current.Properties["success"] = loginToken.success;
+					Application.Current.Properties["token"] = loginToken.token;
+					Navigation.PushModalAsync(new StudentMail());
+				}
+				else
+				{
+					DisplayAlert("Erreur !", "Les informations saisies sont incorrects", "OK");
+				};
+			}
+			else
+			{
+				DisplayAlert("Attention", "Veuillez remplir tous les champs", "OK");
+			}
+			Navigation.PushModalAsync(new StudentMail());
         }
-
-
-
 	}
 }

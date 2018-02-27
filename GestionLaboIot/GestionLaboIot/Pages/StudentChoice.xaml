@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GestionLaboIot.Pages.StudentChoice" BackgroundColor="#00FFFD">
+             x:Class="GestionLaboIot.Pages.StudentChoice">
 
 	<StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Transparent" Spacing="50">
-		<Button x:Name="button_emprunter" Text="Emprunter" BackgroundColor="#FFD500" TextColor="Black" FontSize="Large"/>
-		<Button x:Name="button_rendre" Text="Rendre" BackgroundColor="#FFD500" TextColor="Black" FontSize="Large"/>
+		<Button x:Name="button_emprunter" Text="Emprunter" BackgroundColor="#E12D53" TextColor="White" FontSize="Large"/>
+		<Button x:Name="button_rendre" Text="Rendre" BackgroundColor="#E12D53" TextColor="White" FontSize="Large"/>
 	</StackLayout>
 </ContentPage>
