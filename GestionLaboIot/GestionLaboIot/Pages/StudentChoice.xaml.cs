@@ -26,11 +26,39 @@ namespace GestionLaboIot.Pages
 		{
 			try
 			{
-				scanPage = new ZXingScannerPage();
-				scanPage.OnScanResult += (result) => {
+				var customOverlay = new StackLayout
+				{
+					HorizontalOptions = LayoutOptions.Start,
+					VerticalOptions = LayoutOptions.Start
+				};
+				var retour = new Button
+				{
+					Text = "Retour"
+				};
+				var torch = new Button
+				{
+					Text = "Flash"
+				};
+
+				retour.Clicked += delegate
+				{
+					Navigation.PopModalAsync();
+				};
+				torch.Clicked += delegate {
+					scanPage.ToggleTorch();
+				};
+
+				customOverlay.Children.Add(retour);
+				customOverlay.Children.Add(torch);
+
+				scanPage = new ZXingScannerPage(customOverlay: customOverlay);
+
+				scanPage.OnScanResult += (result) =>
+				{
 					scanPage.IsScanning = false;
 
-					Device.BeginInvokeOnMainThread(() => {
+					Device.BeginInvokeOnMainThread(() =>
+					{
 						Navigation.PopModalAsync();
 						//DisplayAlert("Scanned Barcode", result.Text, "OK");
 						Navigation.PushModalAsync(new RecapScan());
