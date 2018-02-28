@@ -1,4 +1,7 @@
 ﻿using GestionLaboIot.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +10,6 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using ZXing.Mobile;
 using ZXing.Net.Mobile.Forms;
 
 namespace GestionLaboIot.Pages
@@ -16,6 +18,7 @@ namespace GestionLaboIot.Pages
 	public partial class StudentChoice : ContentPage
 	{
 		ZXingScannerPage scanPage;
+		public static Items item = new Items();
 		
 		public StudentChoice()
 		{
@@ -43,58 +46,15 @@ namespace GestionLaboIot.Pages
 
 		private async void Button_rendre_ClickedAsync(object sender, EventArgs e)
 		{
-			try
-			{
-				var customOverlay = new StackLayout
-				{
-					HorizontalOptions = LayoutOptions.Start,
-					VerticalOptions = LayoutOptions.Start
-				};
-				var retour = new Button
-				{
-					Image = "return64.png",
-					BackgroundColor = Color.Transparent
-				};
-				var torch = new Button
-				{
-					Text = "Flash",
-					BackgroundColor = Color.Transparent,
-					FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label))
-				};
-
-				retour.Clicked += delegate
-				{
-					Navigation.PopModalAsync();
-				};
-				torch.Clicked += delegate {
-					scanPage.ToggleTorch();
-				};
-
-				customOverlay.Children.Add(retour);
-				customOverlay.Children.Add(torch);
-
-				scanPage = new ZXingScannerPage(customOverlay: customOverlay);
-
-				scanPage.OnScanResult += (result) =>
-				{
-					scanPage.IsScanning = false;
-
-					Device.BeginInvokeOnMainThread(() =>
-					{
-						Navigation.PopModalAsync();
-						//DisplayAlert("Scanned Barcode", result.Text, "OK");
-						Navigation.PushModalAsync(new RecapScan());
-					});
-				};
-				await Navigation.PushModalAsync(scanPage);
-			}
-			catch (Exception ex)
-			{
-				await DisplayAlert("Erreur", ex.ToString(), "OK");
-			}			
+			LaunchScanPage();		
 		}
 
 		private async void Button_emprunter_ClickedAsync(object sender, EventArgs e)
+		{
+			 LaunchScanPage();
+		}
+
+		public async void LaunchScanPage()
 		{
 			try
 			{
@@ -130,13 +90,36 @@ namespace GestionLaboIot.Pages
 
 				scanPage.OnScanResult += (result) =>
 				{
-					scanPage.IsScanning = false;
+					scanPage.IsScanning = false;					
 
 					Device.BeginInvokeOnMainThread(() =>
 					{
 						Navigation.PopModalAsync();
-						//DisplayAlert("Scanned Barcode", result.Text, "OK");
-						Navigation.PushModalAsync(new RecapScan());
+						var client = new RestClient("http://51.254.117.45:3000/");
+						var request = new RestRequest("items/{id}", Method.GET);
+
+						request.AddHeader("x-acces-token", Application.Current.Properties["token"].ToString());
+						//request.AddParameter("id", result.Text);
+						//request.AddQueryParameter("id", result.Text);
+
+						//request.AddUrlSegment("id", result.Text);
+						request.AddUrlSegment("id", "5a968bb13478ba1b8a3e66a0");
+
+						//	request.AddParameter("password", password);
+						//	request.AddParameter("grant_type", "password");
+						//	request.AddParameter("scope", "openid");
+
+
+						IRestResponse response = client.Execute(request);
+
+						item = JsonConvert.DeserializeObject<Items>(response.Content);
+
+						if (item._id != null && item._id.Length > 1)
+						{
+							Application.Current.Properties["itemId"] = item._id;
+							Navigation.PushModalAsync(new RecapScan());
+						}
+						DisplayAlert("Scanned Barcode", result.Text, "OK");
 					});
 				};
 				await Navigation.PushModalAsync(scanPage);

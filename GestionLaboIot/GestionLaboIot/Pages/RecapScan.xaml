@@ -9,17 +9,17 @@
 				<Label Text="Objet scanné" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" TextColor="Black"/>
 				<Button x:Name="button_LogOut" Image="logout64.png"  HorizontalOptions="End" BackgroundColor="Transparent"/>
 			</StackLayout>
-			<Label x:Name="label_idObject" FontSize="Medium" TextColor="Black" Text="Id : " HorizontalOptions="Start" Margin="15,0,0,15"/>
-			<Label x:Name="label_nomObject" FontSize="Medium" TextColor="Black" Text="Nom : " HorizontalOptions="Start" Margin="15,0,0,15"/>
-			<Label x:Name="label_categObject" FontSize="Medium" TextColor="Black" Text="Categorie : " HorizontalOptions="Start" Margin="15,0,0,15"/>
+			<Label x:Name="label_categObject" FontSize="Medium" TextColor="Black" Text="" HorizontalOptions="Start" Margin="15,0,0,15"/>
+			<Label x:Name="label_sousCateg" FontSize="Medium" TextColor="Black" Text="" HorizontalOptions="Start" Margin="15,0,0,15"/>
+			<Label x:Name="label_nomObject" FontSize="Medium" TextColor="Black" Text="" HorizontalOptions="Start" Margin="15,0,0,15"/>
 			<StackLayout Orientation="Horizontal" Margin="15,0,0,15">
 				<Label Text="Quantité : " FontSize="Medium" TextColor="Black" HorizontalOptions="Start" VerticalOptions="Center"/>
 				<Button x:Name="button_minus" Text="-" BackgroundColor="Red" TextColor="Black" FontSize="Medium"/>
-				<Label x:Name="label_numberObjectSelect" Text="1" TextColor="Black" FontSize="Medium" Margin="5,0,5,0" VerticalOptions="Center"/>
+				<Label x:Name="label_numberObjectSelect" Text="0" TextColor="Black" FontSize="Medium" Margin="5,0,5,0" VerticalOptions="Center"/>
 				<Button x:Name="button_plus" Text="+" BackgroundColor="Green" TextColor="Black" FontSize="Medium"/>
 			</StackLayout>
 			<StackLayout Orientation="Horizontal" Margin="15,0,0,15">
-				<Label Text="Etat : " FontSize="Medium" TextColor="Black" HorizontalOptions="Start" VerticalOptions="Center"/>
+				<Label Text="Etat " FontSize="Medium" TextColor="Black" HorizontalOptions="Start" VerticalOptions="Center"/>
 				<Picker x:Name="picker_etatObject" WidthRequest="150" >
 					<Picker.Items>
 						<x:String>Neuf</x:String>

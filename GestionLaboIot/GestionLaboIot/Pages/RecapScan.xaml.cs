@@ -22,6 +22,11 @@ namespace GestionLaboIot.Pages
 			button_plus.Clicked += Button_plus_Clicked;
 			button_Retour.Clicked += Button_Retour_ClickedAsync;
 			button_LogOut.Clicked += Button_LogOut_ClickedAsync;
+			//label_idObject.Text += StudentChoice.item._id;
+			label_nomObject.Text = StudentChoice.item.Nom;
+			label_numberObjectSelect.Text = StudentChoice.item.Quantite;
+			label_categObject.Text = StudentChoice.item.Categorie.Nom;
+			label_sousCateg.Text = StudentChoice.item.SousCategorie.Nom;
 		}
 
 		private async void Button_LogOut_ClickedAsync(object sender, EventArgs e)
