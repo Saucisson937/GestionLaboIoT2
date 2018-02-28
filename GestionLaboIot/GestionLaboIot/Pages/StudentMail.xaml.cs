@@ -19,7 +19,6 @@ namespace GestionLaboIot.Pages
 		{
             if (Application.Current.Properties.ContainsKey("token"))
             {
-
                 InitializeComponent();
                 button_ValidMail.Clicked += Button_ValidMail_ClickedAsync;
                 button_Retour.Clicked += Button_Retour_ClickedAsync;
@@ -34,7 +33,6 @@ namespace GestionLaboIot.Pages
 		private async void Button_Retour_ClickedAsync(object sender, EventArgs e)
 		{
 			await Navigation.PopModalAsync();
-
 		}
 
 		private async void Button_ValidMail_ClickedAsync(object sender, EventArgs e)
@@ -64,9 +62,7 @@ namespace GestionLaboIot.Pages
 			else
 			{
 				await DisplayAlert("Attention", "Veuillez indiquer une adresse mail ynov", "Ok");
-			}
-			
-			
+			}			
 		}
 	}
 }
