@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using RestSharp;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ZXing.Net.Mobile.Forms;
@@ -16,15 +17,29 @@ namespace GestionLaboIot.Pages
 		ZXingScannerPage scanPage;
 		public RecapScan ()
 		{
-			InitializeComponent ();
-			button_Valid.Clicked += Button_Valid_ClickedAsync;
-			button_minus.Clicked += Button_minus_Clicked;
-			button_plus.Clicked += Button_plus_Clicked;
-			button_Retour.Clicked += Button_Retour_ClickedAsync;
-			button_LogOut.Clicked += Button_LogOut_ClickedAsync;
+
+            if (Application.Current.Properties.ContainsKey("token"))
+            {
+                InitializeComponent();
+                String token = Application.Current.Properties["token"].ToString();
+                String itemId = "5a968bb13478ba1b8a3e66a0";
+                GetItem(token, itemId);
+                button_Valid.Clicked += Button_Valid_ClickedAsync;
+                button_Retour.Clicked += Button_Retour_ClickedAsync;
+                stepper.ValueChanged += OnStepperValueChanged;
+            }
+            else
+            {
+                Navigation.PushModalAsync(new Login());
+            }
 		}
 
-		private async void Button_LogOut_ClickedAsync(object sender, EventArgs e)
+        private void OnStepperValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            label_numberObjectSelect.Text =  e.NewValue.ToString();
+        }
+
+        private async void Button_LogOut_ClickedAsync(object sender, EventArgs e)
 		{
 			var existingPages = Navigation.NavigationStack.ToList();
 			foreach (var page in existingPages)
@@ -33,6 +48,37 @@ namespace GestionLaboIot.Pages
 			}
 			await Navigation.PushModalAsync(new Login());
 		}
+
+        public class Item
+        {
+            public string nom { get; set; }
+            public string categorie { get; set; }
+            public string sousCategorie { get; set; }
+            public string quantite { get; set; }
+        }
+
+        public class Emprunt
+        {
+            public string user_mail { get; set; }
+            public string item { get; set; }
+            public string dateStart { get; set; }
+            public string dateEnd { get; set; }
+            public string etat { get; set; }
+            public string quantite { get; set; }
+        }
+
+        public void GetItem(String token, String itemId){
+            var client = new RestClient("http://51.254.117.45:3000/");
+            var request = new RestRequest("items/{id}", Method.GET);
+            request.AddUrlSegment("id", itemId);
+            request.AddParameter("x-access-token", token);
+            request.AddParameter("scope", "openid");
+
+            IRestResponse response = client.Execute(request);
+            Console.WriteLine(response.Content);
+            Item item = JsonConvert.DeserializeObject<Item>(response.Content);
+
+        }
 
 		private async void Button_Retour_ClickedAsync(object sender, EventArgs e)
 		{
@@ -71,5 +117,6 @@ namespace GestionLaboIot.Pages
 			}
 			
 		}
+
 	}
 }

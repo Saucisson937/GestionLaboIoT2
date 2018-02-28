@@ -83,6 +83,7 @@ namespace GestionLaboIot.Pages
 					{
 						Navigation.PopModalAsync();
 						//DisplayAlert("Scanned Barcode", result.Text, "OK");
+
 						Navigation.PushModalAsync(new RecapScan());
 					});
 				};
