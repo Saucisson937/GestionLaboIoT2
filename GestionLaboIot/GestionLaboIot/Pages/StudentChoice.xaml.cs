@@ -95,6 +95,7 @@ namespace GestionLaboIot.Pages
 					Device.BeginInvokeOnMainThread(() =>
 					{
 						Navigation.PopModalAsync();
+
 						var client = new RestClient("http://51.254.117.45:3000/");
 						var request = new RestRequest("items/{id}", Method.GET);
 
@@ -119,7 +120,7 @@ namespace GestionLaboIot.Pages
 							Application.Current.Properties["itemId"] = item._id;
 							Navigation.PushModalAsync(new RecapScan());
 						}
-						DisplayAlert("Scanned Barcode", result.Text, "OK");
+						
 					});
 				};
 				await Navigation.PushModalAsync(scanPage);

@@ -20,15 +20,14 @@ namespace GestionLaboIot.Pages
             if (Application.Current.Properties.ContainsKey("token"))
             {
                 InitializeComponent();
-                String token = Application.Current.Properties["token"].ToString();
+				stepper.Maximum = Convert.ToInt32(StudentChoice.item.Quantite);
+				String token = Application.Current.Properties["token"].ToString();
                 String itemId = "5a968bb13478ba1b8a3e66a0";
                 button_Valid.Clicked += Button_Valid_ClickedAsync;
                 button_Retour.Clicked += Button_Retour_ClickedAsync;
-                stepper.ValueChanged += OnStepperValueChanged;
-				
+                stepper.ValueChanged += OnStepperValueChanged;				
 				button_LogOut.Clicked += Button_LogOut_ClickedAsync;
 				label_nomObject.Text = StudentChoice.item.Nom;
-				label_numberObjectSelect.Text = StudentChoice.item.Quantite;
 				label_categObject.Text = StudentChoice.item.Categorie.Nom;
 				label_sousCateg.Text = StudentChoice.item.SousCategorie.Nom;
 			}
@@ -39,8 +38,8 @@ namespace GestionLaboIot.Pages
 		}
 
         private void OnStepperValueChanged(object sender, ValueChangedEventArgs e)
-        {
-            label_numberObjectSelect.Text =  e.NewValue.ToString();
+        {			
+			label_numberObjectSelect.Text = e.NewValue.ToString();            
         }
 
         private async void Button_LogOut_ClickedAsync(object sender, EventArgs e)
