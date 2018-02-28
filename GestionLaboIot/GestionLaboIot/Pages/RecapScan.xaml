@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GestionLaboIot.Pages.RecapScan">
@@ -14,9 +14,8 @@
 			<Label x:Name="label_nomObject" FontSize="Medium" TextColor="Black" Text="" HorizontalOptions="Start" Margin="15,0,0,15"/>
 			<StackLayout Orientation="Horizontal" Margin="15,0,0,15">
 				<Label Text="Quantité : " FontSize="Medium" TextColor="Black" HorizontalOptions="Start" VerticalOptions="Center"/>
-				<Button x:Name="button_minus" Text="-" BackgroundColor="Red" TextColor="Black" FontSize="Medium"/>
-				<Label x:Name="label_numberObjectSelect" Text="0" TextColor="Black" FontSize="Medium" Margin="5,0,5,0" VerticalOptions="Center"/>
-				<Button x:Name="button_plus" Text="+" BackgroundColor="Green" TextColor="Black" FontSize="Medium"/>
+				<Stepper x:Name="stepper" Minimum="0"/>
+				<Label x:Name="label_numberObjectSelect" Text="1" TextColor="Black" FontSize="Medium" Margin="5,0,5,0" VerticalOptions="Center"/>
 			</StackLayout>
 			<StackLayout Orientation="Horizontal" Margin="15,0,0,15">
 				<Label Text="Etat " FontSize="Medium" TextColor="Black" HorizontalOptions="Start" VerticalOptions="Center"/>

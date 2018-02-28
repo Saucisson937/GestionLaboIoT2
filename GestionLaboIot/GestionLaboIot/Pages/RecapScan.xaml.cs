@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using RestSharp;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ZXing.Net.Mobile.Forms;
@@ -16,20 +17,33 @@ namespace GestionLaboIot.Pages
 		ZXingScannerPage scanPage;
 		public RecapScan ()
 		{
-			InitializeComponent ();
-			button_Valid.Clicked += Button_Valid_ClickedAsync;
-			button_minus.Clicked += Button_minus_Clicked;
-			button_plus.Clicked += Button_plus_Clicked;
-			button_Retour.Clicked += Button_Retour_ClickedAsync;
-			button_LogOut.Clicked += Button_LogOut_ClickedAsync;
-			//label_idObject.Text += StudentChoice.item._id;
-			label_nomObject.Text = StudentChoice.item.Nom;
-			label_numberObjectSelect.Text = StudentChoice.item.Quantite;
-			label_categObject.Text = StudentChoice.item.Categorie.Nom;
-			label_sousCateg.Text = StudentChoice.item.SousCategorie.Nom;
+            if (Application.Current.Properties.ContainsKey("token"))
+            {
+                InitializeComponent();
+                String token = Application.Current.Properties["token"].ToString();
+                String itemId = "5a968bb13478ba1b8a3e66a0";
+                button_Valid.Clicked += Button_Valid_ClickedAsync;
+                button_Retour.Clicked += Button_Retour_ClickedAsync;
+                stepper.ValueChanged += OnStepperValueChanged;
+				
+				button_LogOut.Clicked += Button_LogOut_ClickedAsync;
+				label_nomObject.Text = StudentChoice.item.Nom;
+				label_numberObjectSelect.Text = StudentChoice.item.Quantite;
+				label_categObject.Text = StudentChoice.item.Categorie.Nom;
+				label_sousCateg.Text = StudentChoice.item.SousCategorie.Nom;
+			}
+            else
+            {
+                Navigation.PushModalAsync(new Login());
+            }
 		}
 
-		private async void Button_LogOut_ClickedAsync(object sender, EventArgs e)
+        private void OnStepperValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            label_numberObjectSelect.Text =  e.NewValue.ToString();
+        }
+
+        private async void Button_LogOut_ClickedAsync(object sender, EventArgs e)
 		{
 			var existingPages = Navigation.NavigationStack.ToList();
 			foreach (var page in existingPages)
@@ -39,21 +53,19 @@ namespace GestionLaboIot.Pages
 			await Navigation.PushModalAsync(new Login());
 		}
 
+        public class Emprunt
+        {
+            public string user_mail { get; set; }
+            public string item { get; set; }
+            public string dateStart { get; set; }
+            public string dateEnd { get; set; }
+            public string etat { get; set; }
+            public string quantite { get; set; }
+        }
 		private async void Button_Retour_ClickedAsync(object sender, EventArgs e)
 		{
 			await Navigation.PopModalAsync();
 		}
-
-		private void Button_plus_Clicked(object sender, EventArgs e)
-		{
-			//Faire +1 sur le label quantité (et donc -1 sur la quantité restante)
-		}
-
-		private void Button_minus_Clicked(object sender, EventArgs e)
-		{
-			//Faire -1 sur le label quantité (et donc +1 sur la quantité restante)
-		}
-
 		private async void Button_Valid_ClickedAsync(object sender, EventArgs e)
 		{
 			var nouveauScan = await DisplayAlert("Envoyé", "Données envoyées. Voulez-vous scanner un autre objet ?","Oui","Non");
@@ -76,5 +88,6 @@ namespace GestionLaboIot.Pages
 			}
 			
 		}
+
 	}
 }
