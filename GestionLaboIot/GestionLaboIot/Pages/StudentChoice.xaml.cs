@@ -23,6 +23,17 @@ namespace GestionLaboIot.Pages
 			button_emprunter.Clicked += Button_emprunter_ClickedAsync;
 			button_rendre.Clicked += Button_rendre_ClickedAsync;
 			button_Retour.Clicked += Button_Retour_ClickedAsync;
+			button_LogOut.Clicked += Button_LogOut_ClickedAsync;
+		}
+
+		private async void Button_LogOut_ClickedAsync(object sender, EventArgs e)
+		{
+			var existingPages = Navigation.NavigationStack.ToList();
+			foreach (var page in existingPages)
+			{
+				Navigation.RemovePage(page);
+			}
+			await Navigation.PushModalAsync(new Login());
 		}
 
 		private async void Button_Retour_ClickedAsync(object sender, EventArgs e)

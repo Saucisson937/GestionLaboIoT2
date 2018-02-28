@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GestionLaboIot.Pages.StudentMail">
 	<StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-		<Button x:Name="button_Retour" Image="return64.png"  HorizontalOptions="Start" BackgroundColor="Transparent"/>
+		<Button x:Name="button_LogOut" Image="logout64.png"  HorizontalOptions="End" BackgroundColor="Transparent"/>
 		<StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" BackgroundColor="Transparent" >
 			<Label Text="Entrez une adresse mail Ynov :" FontSize="Medium" TextColor="Black"/>
 			<Entry x:Name="entry_Mail" Placeholder="prenom.nom@ynov.com"/>

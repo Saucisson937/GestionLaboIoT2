@@ -38,6 +38,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Ressources\logout64.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Ressources\return64.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

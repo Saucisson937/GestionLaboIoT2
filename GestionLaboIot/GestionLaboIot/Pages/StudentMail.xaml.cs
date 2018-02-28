@@ -17,22 +17,27 @@ namespace GestionLaboIot.Pages
 	{
 		public StudentMail ()
 		{
-            if (Application.Current.Properties.ContainsKey("token"))
-            {
+            //if (Application.Current.Properties.ContainsKey("token"))
+            //{
                 InitializeComponent();
                 button_ValidMail.Clicked += Button_ValidMail_ClickedAsync;
-                button_Retour.Clicked += Button_Retour_ClickedAsync;
-            }
-            else
-            {
-                Navigation.PushModalAsync(new Login());
-            }
+				button_LogOut.Clicked += Button_LogOut_ClickedAsync;
+            //}
+            //else
+            //{
+            //    Navigation.PushModalAsync(new Login());
+            //}
 			
 		}
 
-		private async void Button_Retour_ClickedAsync(object sender, EventArgs e)
+		private async void Button_LogOut_ClickedAsync(object sender, EventArgs e)
 		{
-			await Navigation.PopModalAsync();
+			var existingPages = Navigation.NavigationStack.ToList();
+			foreach (var page in existingPages)
+			{
+				Navigation.RemovePage(page);
+			}
+			await Navigation.PushModalAsync(new Login());
 		}
 
 		private async void Button_ValidMail_ClickedAsync(object sender, EventArgs e)

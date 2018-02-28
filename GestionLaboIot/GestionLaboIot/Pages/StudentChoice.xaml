@@ -3,8 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GestionLaboIot.Pages.StudentChoice">
 	<StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-		<Button x:Name="button_Retour" Image="return64.png"  HorizontalOptions="Start" BackgroundColor="Transparent"/>
-		<StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Transparent" Spacing="50">
+		<StackLayout Orientation="Horizontal" VerticalOptions="Start" HorizontalOptions="FillAndExpand"  BackgroundColor="Transparent">
+			<Button x:Name="button_Retour" Image="return64.png"  HorizontalOptions="StartAndExpand" BackgroundColor="Transparent"/>
+			<Button x:Name="button_LogOut" Image="logout64.png"  HorizontalOptions="End" BackgroundColor="Transparent"/>
+		</StackLayout>		
+		<StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" BackgroundColor="Transparent" Spacing="50">
 			<Button x:Name="button_emprunter" Text="Emprunter" BackgroundColor="#E12D53" TextColor="White" FontSize="Large"/>
 			<Button x:Name="button_rendre" Text="Rendre" BackgroundColor="#E12D53" TextColor="White" FontSize="Large"/>
 		</StackLayout>

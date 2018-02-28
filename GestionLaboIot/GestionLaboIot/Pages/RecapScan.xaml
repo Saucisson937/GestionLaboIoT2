@@ -4,9 +4,10 @@
              x:Class="GestionLaboIot.Pages.RecapScan">
 	<ContentPage.Content>
 		<StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
-			<StackLayout Orientation="Horizontal" VerticalOptions="Start" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-				<Button x:Name="button_Retour" Image="return64.png"  HorizontalOptions="Start" BackgroundColor="Transparent"/>
-				<Label Text="Objet scanné" FontSize="Large" HorizontalOptions="Center" TextColor="Black" Margin="0,0,0,30" />
+			<StackLayout Orientation="Horizontal" VerticalOptions="Start" HorizontalOptions="FillAndExpand"  BackgroundColor="Transparent">
+				<Button x:Name="button_Retour" Image="return64.png"  HorizontalOptions="StartAndExpand" BackgroundColor="Transparent"/>
+				<Label Text="Objet scanné" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" TextColor="Black"/>
+				<Button x:Name="button_LogOut" Image="logout64.png"  HorizontalOptions="End" BackgroundColor="Transparent"/>
 			</StackLayout>
 			<Label x:Name="label_idObject" FontSize="Medium" TextColor="Black" Text="Id : " HorizontalOptions="Start" Margin="15,0,0,15"/>
 			<Label x:Name="label_nomObject" FontSize="Medium" TextColor="Black" Text="Nom : " HorizontalOptions="Start" Margin="15,0,0,15"/>
