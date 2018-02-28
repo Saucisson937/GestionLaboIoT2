@@ -38,6 +38,7 @@ namespace GestionLaboIot
 
         public void Authenticate(string email, string password)
         {
+			email = email.Replace(" ", "");
             if (!String.IsNullOrEmpty(email) && !String.IsNullOrEmpty(password) &&
                 Regex.Match(email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$").Success )
 			{
