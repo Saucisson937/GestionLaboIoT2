@@ -38,14 +38,9 @@ namespace GestionLaboIot
 
         public void Authenticate(string email, string password)
         {
-<<<<<<< HEAD
+
             if (!String.IsNullOrEmpty(email.Trim()) && !String.IsNullOrEmpty(password) &&
                 Regex.Match(email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$").Success )
-=======
-			email = email.Replace(" ", "");
-			if (!String.IsNullOrEmpty(email) && !String.IsNullOrEmpty(password) &&
-				Regex.Match(email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$").Success)
->>>>>>> 9c21eb76d9a1f1ecf3aeb3f2bcc79b8d79f6f6ac
 			{
 				var client = new RestClient("http://51.254.117.45:3000/");
 				var request = new RestRequest("authenticate", Method.POST);
@@ -56,7 +51,7 @@ namespace GestionLaboIot
 
 				IRestResponse response = client.Execute(request);
 				LoginToken loginToken = JsonConvert.DeserializeObject<LoginToken>(response.Content);
-<<<<<<< HEAD
+
 
 				if (loginToken.token != null)
 				{
@@ -69,24 +64,6 @@ namespace GestionLaboIot
 				DisplayAlert("Attention", "Veuillez saisir correctement les champs", "Fermer");
 			}
 
-=======
-
-				if (loginToken.token != null)
-				{
-					Application.Current.Properties["token"] = loginToken.token;
-					Navigation.PushModalAsync(new StudentMail());
-				}
-				else
-				{
-					DisplayAlert("Authenfication échouée !", "Les informations saisies sont incorrects", "Fermer");
-				};
-			}
-			else
-			{
-				DisplayAlert("Attention", "Veuillez saisir correctement les champs", "Fermer");
-			}
-			//Navigation.PushModalAsync(new StudentMail());
->>>>>>> 9c21eb76d9a1f1ecf3aeb3f2bcc79b8d79f6f6ac
-        }
+        	}
 	}
 }
