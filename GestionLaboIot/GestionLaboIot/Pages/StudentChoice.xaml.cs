@@ -111,7 +111,7 @@ namespace GestionLaboIot.Pages
 
 						item = JsonConvert.DeserializeObject<Items>(response.Content);
 
-						if (item._id != null && item.Quantite != "0")
+						if (item._id != null)
 						{
 							Application.Current.Properties["itemId"] = item._id;
 							var client_rendre = new RestClient("http://51.254.117.45:3000/");
@@ -136,7 +136,15 @@ namespace GestionLaboIot.Pages
 
 							if (emprunt != null || isEmprunt)
 							{
-								Navigation.PushModalAsync(new RecapScan());
+								if(isEmprunt && item.Quantite == "0")
+								{
+									DisplayAlert("Attention", "Nous ne l'avons plus en stock", "OK");
+								}
+								else
+								{
+									Navigation.PushModalAsync(new RecapScan());
+								}
+								
 							}
 							else
 							{
@@ -146,7 +154,14 @@ namespace GestionLaboIot.Pages
 						}
 						else
 						{
-							DisplayAlert("Attention", "Nous ne retrouvons pas cet item ou nous ne l'avons plus en stock", "OK");
+							if (isEmprunt)
+							{
+								DisplayAlert("Attention", "Nous ne retrouvons pas cet item", "OK");
+							}
+							else
+							{
+								DisplayAlert("Attention", "Vous ne pouvez pas rendre puisque vous n'avez rien emprunté", "OK");
+							}
 						}
 					});
 				};
