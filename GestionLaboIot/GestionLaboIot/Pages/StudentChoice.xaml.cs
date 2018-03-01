@@ -21,7 +21,7 @@ namespace GestionLaboIot.Pages
 		public static Items item = new Items();
 		public static Emprunt emprunt = new Emprunt();
 		public static bool newEmprunt = false;
-		bool isEmprunt = true;
+		public static bool isEmprunt = true;
 		
 		public StudentChoice()
 		{
@@ -101,8 +101,7 @@ namespace GestionLaboIot.Pages
 					Device.BeginInvokeOnMainThread(() =>
 					{
 						Navigation.PopModalAsync();
-						Application.Current.Properties["isEmprunt"] = true;
-
+						
 						var client = new RestClient("http://51.254.117.45:3000/");
 						var request = new RestRequest("items/{id}", Method.GET);
 
@@ -112,7 +111,7 @@ namespace GestionLaboIot.Pages
 
 						item = JsonConvert.DeserializeObject<Items>(response.Content);
 
-						if (item._id != null)
+						if (item._id != null && item.Quantite != "0")
 						{
 							Application.Current.Properties["itemId"] = item._id;
 							var client_rendre = new RestClient("http://51.254.117.45:3000/");
@@ -125,18 +124,17 @@ namespace GestionLaboIot.Pages
 							IRestResponse response_rendre = client_rendre.Execute(request_rendre);
 							emprunt = JsonConvert.DeserializeObject<Emprunt>(response_rendre.Content);
 
-							if (isEmprunt && emprunt._id != null)
+							if (isEmprunt && emprunt == null)
 							{
-								newEmprunt = false;
-								Application.Current.Properties["isEmprunt"] = "true";
+								newEmprunt = true;
 							} 
 							else
 							{
-								newEmprunt = true;
-								Application.Current.Properties["isEmprunt"] = "flase";
+
+								newEmprunt = false;
 							}
 
-							if (emprunt._id != null || isEmprunt)
+							if (emprunt != null || isEmprunt)
 							{
 								Navigation.PushModalAsync(new RecapScan());
 							}
@@ -148,7 +146,7 @@ namespace GestionLaboIot.Pages
 						}
 						else
 						{
-							DisplayAlert("Attention", "Nous ne retrouvons pas cet item", "OK");
+							DisplayAlert("Attention", "Nous ne retrouvons pas cet item ou nous ne l'avons plus en stock", "OK");
 						}
 					});
 				};

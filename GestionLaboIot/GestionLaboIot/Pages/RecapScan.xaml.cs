@@ -32,13 +32,15 @@ namespace GestionLaboIot.Pages
 				label_nomObject.Text = StudentChoice.item.Nom;
 				label_categObject.Text = StudentChoice.item.Categorie.Nom;
 				label_sousCateg.Text = StudentChoice.item.SousCategorie.Nom;
-				if (Application.Current.Properties["isEmprunt"].ToString() == "true")
+				if (StudentChoice.isEmprunt)
 				{
 					stepper.Maximum = Convert.ToInt32(StudentChoice.item.Quantite);
 					if (!StudentChoice.newEmprunt)
 					{
-						DisplayAlert("Attention", "Vous en avez déjà emprunter" + StudentChoice.emprunt.quantite , "OK"); 
+						DisplayAlert("Attention", "Vous en avez déjà emprunter" + StudentChoice.emprunt.quantite , "OK");
+						stepper.Maximum = Convert.ToInt32(StudentChoice.item.Quantite) + Convert.ToInt32(StudentChoice.emprunt.quantite);
 						stepper.Minimum = Convert.ToInt32(StudentChoice.emprunt.quantite);
+						picker_etatObject.SelectedItem = StudentChoice.emprunt.etat;
 					}
 				}
 				else
@@ -79,10 +81,10 @@ namespace GestionLaboIot.Pages
 		{
 			bool nouveauScan = false;
 			bool flag = false;
+			var client = new RestClient("http://51.254.117.45:3000");
 
-			if(StudentChoice.newEmprunt)
-			{
-				var client = new RestClient("http://51.254.117.45:3000");
+			if (StudentChoice.newEmprunt)
+			{				
 				var request = new RestRequest("emprunts/create", Method.PUT);
 
 				request.AddHeader("x-access-token", Application.Current.Properties["token"].ToString());
@@ -92,6 +94,7 @@ namespace GestionLaboIot.Pages
 				request.AddParameter("quantite", label_numberObjectSelect.Text);
 				IRestResponse response = client.Execute(request);
 				emprunt = JsonConvert.DeserializeObject<Emprunt>(response.Content);
+				
 
 				if(emprunt._id != null && emprunt._id.Length > 1)
 				{
@@ -100,19 +103,22 @@ namespace GestionLaboIot.Pages
 			}
 			else
 			{
-				var client = new RestClient("http://51.254.117.45:3000");
-				var request = new RestRequest("emprunts/{id}", Method.POST);
-
-				request.AddHeader("x-access-token", Application.Current.Properties["token"].ToString());
-				request.AddUrlSegment("id", StudentChoice.emprunt._id);
-				request.AddParameter("isEmprunt", Application.Current.Properties["isEmprunt"].ToString());
-				request.AddParameter("etat", picker_etatObject.SelectedItem.ToString());
-				request.AddParameter("quantite", label_numberObjectSelect.Text);
-				IRestResponse response = client.Execute(request);
+				var request_ = new RestRequest("emprunts/{id}", Method.POST);
+				string paramIsEmprunt = (StudentChoice.isEmprunt ? "true" : "false");
+				request_.AddHeader("x-access-token", Application.Current.Properties["token"].ToString());
+				request_.AddUrlSegment("id", StudentChoice.emprunt._id);
+				request_.AddParameter("isEmprunt", paramIsEmprunt);
+				request_.AddParameter("etat", picker_etatObject.SelectedItem.ToString());
+				request_.AddParameter("quantite", label_numberObjectSelect.Text);
+				IRestResponse response_ = client.Execute(request_);
 				
-				if (response.IsSuccessful)
+				if (response_.StatusCode == System.Net.HttpStatusCode.Accepted)
 				{
 					flag = true;
+				}
+				else
+				{
+					flag = false;
 				}
 			}
 
