@@ -6,12 +6,12 @@ namespace GestionLaboIot.Models
 {
     public class Emprunt
     {
-		public string Email { get; set; }
-		public string Item { get; set; }
-		public string Categorie { get; set; }
-		public string SousCategorie { get; set; }
-		public DateTime Date { get; set; }
-		public int Quantite { get; set; }
-		public string Etat { get; set; }
+		public string _id { get; set; }
+		public string user_email { get; set; }
+		public string item { get; set; }
+		public DateTime date_start { get; set; }
+		public DateTime date_end { get; set; }
+		public string etat { get; set; }
+		public string quantite { get; set; }
 	}
 }

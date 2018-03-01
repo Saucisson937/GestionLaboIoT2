@@ -50,6 +50,7 @@ namespace GestionLaboIot.Pages
 				{
 					if (entry_Mail.Text.EndsWith("ynov.com")) //test si domaine = ynov.com
 					{
+						Application.Current.Properties["user_email"] = entry_Mail.ToString();
 						await Navigation.PushModalAsync(new StudentChoice());
 					}
 					else

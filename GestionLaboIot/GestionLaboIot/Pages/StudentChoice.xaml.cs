@@ -19,6 +19,8 @@ namespace GestionLaboIot.Pages
 	{
 		ZXingScannerPage scanPage;
 		public static Items item = new Items();
+		public static Emprunt emprunt = new Emprunt();
+		bool isEmprunt = true;
 		
 		public StudentChoice()
 		{
@@ -46,15 +48,17 @@ namespace GestionLaboIot.Pages
 
 		private async void Button_rendre_ClickedAsync(object sender, EventArgs e)
 		{
-			LaunchScanPage();		
+			isEmprunt = false;
+			LaunchScanPage(isEmprunt);		
 		}
 
 		private async void Button_emprunter_ClickedAsync(object sender, EventArgs e)
 		{
-			 LaunchScanPage();
+			isEmprunt = true;
+			LaunchScanPage(isEmprunt);
 		}
 
-		public async void LaunchScanPage()
+		public async void LaunchScanPage(bool isEmprunt)
 		{
 			try
 			{
@@ -96,21 +100,12 @@ namespace GestionLaboIot.Pages
 					{
 						Navigation.PopModalAsync();
 
+						Application.Current.Properties["isEmprunt"] = true;
 						var client = new RestClient("http://51.254.117.45:3000/");
 						var request = new RestRequest("items/{id}", Method.GET);
 
 						request.AddHeader("x-acces-token", Application.Current.Properties["token"].ToString());
-						//request.AddParameter("id", result.Text);
-						//request.AddQueryParameter("id", result.Text);
-
-						//request.AddUrlSegment("id", result.Text);
 						request.AddUrlSegment("id", "5a968bb13478ba1b8a3e66a0");
-
-						//	request.AddParameter("password", password);
-						//	request.AddParameter("grant_type", "password");
-						//	request.AddParameter("scope", "openid");
-
-
 						IRestResponse response = client.Execute(request);
 
 						item = JsonConvert.DeserializeObject<Items>(response.Content);
@@ -118,9 +113,36 @@ namespace GestionLaboIot.Pages
 						if (item._id != null && item._id.Length > 1)
 						{
 							Application.Current.Properties["itemId"] = item._id;
-							Navigation.PushModalAsync(new RecapScan());
+							Application.Current.Properties["isEmprunt"] = "true";
+							if (!isEmprunt)
+							{
+								Application.Current.Properties["isEmprunt"] = "false";
+								var client_rendre = new RestClient("http://51.254.117.45:3000/");
+								var request_rendre = new RestRequest("emprunts/{id}", Method.POST);
+
+								request_rendre.AddHeader("x-acces-token", Application.Current.Properties["token"].ToString());
+								request_rendre.AddParameter("user_email", Application.Current.Properties["user_email"].ToString());
+								request_rendre.AddParameter("id", "5a968bb13478ba1b8a3e66a0");
+								//request.AddParameter("id", result.Text);
+
+								IRestResponse response_rendre = client.Execute(request_rendre);
+								emprunt = JsonConvert.DeserializeObject<Emprunt>(response.Content);
+
+								if (emprunt._id != null && emprunt._id.Length < 1)
+								{
+									Navigation.PushModalAsync(new RecapScan());
+								}
+								else
+								{
+									DisplayAlert("Attention", "Impossible de retrouver l'emprunt", "OK");
+								}
+							}
+							else
+							{
+								Navigation.PushModalAsync(new RecapScan());
+							}
+							
 						}
-						
 					});
 				};
 				await Navigation.PushModalAsync(scanPage);
