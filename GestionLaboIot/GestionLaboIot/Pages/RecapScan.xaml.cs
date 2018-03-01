@@ -17,19 +17,7 @@ namespace GestionLaboIot.Pages
 		ZXingScannerPage scanPage;
 		public RecapScan ()
 		{
-<<<<<<< HEAD
 
-            if (Application.Current.Properties.ContainsKey("token"))
-            {
-                InitializeComponent();
-                String token = Application.Current.Properties["token"].ToString();
-                String itemId = "5a968bb13478ba1b8a3e66a0";
-                GetItem(token, itemId);
-                button_Valid.Clicked += Button_Valid_ClickedAsync;
-                button_Retour.Clicked += Button_Retour_ClickedAsync;
-                stepper.ValueChanged += OnStepperValueChanged;
-            }
-=======
             if (Application.Current.Properties.ContainsKey("token"))
             {
                 InitializeComponent();
@@ -44,7 +32,7 @@ namespace GestionLaboIot.Pages
 				label_categObject.Text = StudentChoice.item.Categorie.Nom;
 				label_sousCateg.Text = StudentChoice.item.SousCategorie.Nom;
 			}
->>>>>>> 9c21eb76d9a1f1ecf3aeb3f2bcc79b8d79f6f6ac
+
             else
             {
                 Navigation.PushModalAsync(new Login());
@@ -52,14 +40,10 @@ namespace GestionLaboIot.Pages
 		}
 
         private void OnStepperValueChanged(object sender, ValueChangedEventArgs e)
-<<<<<<< HEAD
         {
             label_numberObjectSelect.Text =  e.NewValue.ToString();
-=======
-        {			
-			label_numberObjectSelect.Text = e.NewValue.ToString();            
->>>>>>> 9c21eb76d9a1f1ecf3aeb3f2bcc79b8d79f6f6ac
-        }
+	}
+
 
         private async void Button_LogOut_ClickedAsync(object sender, EventArgs e)
 		{
@@ -71,27 +55,6 @@ namespace GestionLaboIot.Pages
 			await Navigation.PushModalAsync(new Login());
 		}
 
-<<<<<<< HEAD
-        public class Item
-        {
-            public string nom { get; set; }
-            public string categorie { get; set; }
-            public string sousCategorie { get; set; }
-            public string quantite { get; set; }
-        }
-
-=======
->>>>>>> 9c21eb76d9a1f1ecf3aeb3f2bcc79b8d79f6f6ac
-        public class Emprunt
-        {
-            public string user_mail { get; set; }
-            public string item { get; set; }
-            public string dateStart { get; set; }
-            public string dateEnd { get; set; }
-            public string etat { get; set; }
-            public string quantite { get; set; }
-        }
-<<<<<<< HEAD
 
         public void GetItem(String token, String itemId){
             var client = new RestClient("http://51.254.117.45:3000/");
@@ -106,8 +69,6 @@ namespace GestionLaboIot.Pages
 
         }
 
-=======
->>>>>>> 9c21eb76d9a1f1ecf3aeb3f2bcc79b8d79f6f6ac
 		private async void Button_Retour_ClickedAsync(object sender, EventArgs e)
 		{
 			await Navigation.PopModalAsync();
