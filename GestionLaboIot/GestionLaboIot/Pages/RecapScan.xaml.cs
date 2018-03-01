@@ -82,7 +82,7 @@ namespace GestionLaboIot.Pages
 
 			if(StudentChoice.newEmprunt)
 			{
-				var client = new RestClient("http://10.92.1.230:3000");
+				var client = new RestClient("http://51.254.117.45:3000");
 				var request = new RestRequest("emprunts/create", Method.PUT);
 
 				request.AddHeader("x-access-token", Application.Current.Properties["token"].ToString());
@@ -100,7 +100,7 @@ namespace GestionLaboIot.Pages
 			}
 			else
 			{
-				var client = new RestClient("http://10.92.1.230:3000");
+				var client = new RestClient("http://51.254.117.45:3000");
 				var request = new RestRequest("emprunts/{id}", Method.POST);
 
 				request.AddHeader("x-access-token", Application.Current.Properties["token"].ToString());

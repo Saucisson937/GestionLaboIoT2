@@ -103,7 +103,7 @@ namespace GestionLaboIot.Pages
 						Navigation.PopModalAsync();
 						Application.Current.Properties["isEmprunt"] = true;
 
-						var client = new RestClient("http://10.92.1.230:3000/");
+						var client = new RestClient("http://51.254.117.45:3000/");
 						var request = new RestRequest("items/{id}", Method.GET);
 
 						request.AddHeader("x-access-token", Application.Current.Properties["token"].ToString());
@@ -115,7 +115,7 @@ namespace GestionLaboIot.Pages
 						if (item._id != null)
 						{
 							Application.Current.Properties["itemId"] = item._id;
-							var client_rendre = new RestClient("http://10.92.1.230:3000/");
+							var client_rendre = new RestClient("http://51.254.117.45:3000/");
 							var request_rendre = new RestRequest("emprunts/byUserAndItem", Method.POST);
 
 							request_rendre.AddHeader("x-acces-token", Application.Current.Properties["token"].ToString());
