@@ -4,6 +4,7 @@
              x:Class="GestionLaboIot.Pages.RecapScan">
 	<ContentPage.Content>
 		<StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
+<<<<<<< HEAD
 			<StackLayout Orientation="Horizontal" VerticalOptions="Start" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
 				<Button x:Name="button_Retour" Image="return64.png"  HorizontalOptions="Start" BackgroundColor="Transparent"/>
 				<Label Text="Objet scanné" FontSize="Large" HorizontalOptions="Center" TextColor="Black" Margin="0,0,0,30" />
@@ -17,8 +18,23 @@
                 <Stepper x:Name="stepper" Minimum="0"></Stepper>
                 <Label x:Name="label_numberObjectSelect" Text="1" TextColor="Black" FontSize="Medium" Margin="5,0,5,0" VerticalOptions="Center"/>
 				</StackLayout>
+=======
+			<StackLayout Orientation="Horizontal" VerticalOptions="Start" HorizontalOptions="FillAndExpand"  BackgroundColor="Transparent">
+				<Button x:Name="button_Retour" Image="return64.png"  HorizontalOptions="StartAndExpand" BackgroundColor="Transparent"/>
+				<Label Text="Objet scanné" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" TextColor="Black"/>
+				<Button x:Name="button_LogOut" Image="logout64.png"  HorizontalOptions="End" BackgroundColor="Transparent"/>
+			</StackLayout>
+			<Label x:Name="label_categObject" FontSize="Medium" TextColor="Black" Text="" HorizontalOptions="Start" Margin="15,0,0,15"/>
+			<Label x:Name="label_sousCateg" FontSize="Medium" TextColor="Black" Text="" HorizontalOptions="Start" Margin="15,0,0,15"/>
+			<Label x:Name="label_nomObject" FontSize="Medium" TextColor="Black" Text="" HorizontalOptions="Start" Margin="15,0,0,15"/>
 			<StackLayout Orientation="Horizontal" Margin="15,0,0,15">
-				<Label Text="Etat : " FontSize="Medium" TextColor="Black" HorizontalOptions="Start" VerticalOptions="Center"/>
+				<Label Text="Quantité : " FontSize="Medium" TextColor="Black" HorizontalOptions="Start" VerticalOptions="Center"/>
+				<Stepper x:Name="stepper" Minimum="0"/>
+				<Label x:Name="label_numberObjectSelect" Text="1" TextColor="Black" FontSize="Medium" Margin="5,0,5,0" VerticalOptions="Center"/>
+			</StackLayout>
+>>>>>>> 9c21eb76d9a1f1ecf3aeb3f2bcc79b8d79f6f6ac
+			<StackLayout Orientation="Horizontal" Margin="15,0,0,15">
+				<Label Text="Etat " FontSize="Medium" TextColor="Black" HorizontalOptions="Start" VerticalOptions="Center"/>
 				<Picker x:Name="picker_etatObject" WidthRequest="150" >
 					<Picker.Items>
 						<x:String>Neuf</x:String>

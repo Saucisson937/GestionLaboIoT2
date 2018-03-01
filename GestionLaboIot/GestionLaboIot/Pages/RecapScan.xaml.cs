@@ -17,6 +17,7 @@ namespace GestionLaboIot.Pages
 		ZXingScannerPage scanPage;
 		public RecapScan ()
 		{
+<<<<<<< HEAD
 
             if (Application.Current.Properties.ContainsKey("token"))
             {
@@ -28,6 +29,22 @@ namespace GestionLaboIot.Pages
                 button_Retour.Clicked += Button_Retour_ClickedAsync;
                 stepper.ValueChanged += OnStepperValueChanged;
             }
+=======
+            if (Application.Current.Properties.ContainsKey("token"))
+            {
+                InitializeComponent();
+				stepper.Maximum = Convert.ToInt32(StudentChoice.item.Quantite);
+				String token = Application.Current.Properties["token"].ToString();
+                String itemId = "5a968bb13478ba1b8a3e66a0";
+                button_Valid.Clicked += Button_Valid_ClickedAsync;
+                button_Retour.Clicked += Button_Retour_ClickedAsync;
+                stepper.ValueChanged += OnStepperValueChanged;				
+				button_LogOut.Clicked += Button_LogOut_ClickedAsync;
+				label_nomObject.Text = StudentChoice.item.Nom;
+				label_categObject.Text = StudentChoice.item.Categorie.Nom;
+				label_sousCateg.Text = StudentChoice.item.SousCategorie.Nom;
+			}
+>>>>>>> 9c21eb76d9a1f1ecf3aeb3f2bcc79b8d79f6f6ac
             else
             {
                 Navigation.PushModalAsync(new Login());
@@ -35,8 +52,13 @@ namespace GestionLaboIot.Pages
 		}
 
         private void OnStepperValueChanged(object sender, ValueChangedEventArgs e)
+<<<<<<< HEAD
         {
             label_numberObjectSelect.Text =  e.NewValue.ToString();
+=======
+        {			
+			label_numberObjectSelect.Text = e.NewValue.ToString();            
+>>>>>>> 9c21eb76d9a1f1ecf3aeb3f2bcc79b8d79f6f6ac
         }
 
         private async void Button_LogOut_ClickedAsync(object sender, EventArgs e)
@@ -49,6 +71,7 @@ namespace GestionLaboIot.Pages
 			await Navigation.PushModalAsync(new Login());
 		}
 
+<<<<<<< HEAD
         public class Item
         {
             public string nom { get; set; }
@@ -57,6 +80,8 @@ namespace GestionLaboIot.Pages
             public string quantite { get; set; }
         }
 
+=======
+>>>>>>> 9c21eb76d9a1f1ecf3aeb3f2bcc79b8d79f6f6ac
         public class Emprunt
         {
             public string user_mail { get; set; }
@@ -66,6 +91,7 @@ namespace GestionLaboIot.Pages
             public string etat { get; set; }
             public string quantite { get; set; }
         }
+<<<<<<< HEAD
 
         public void GetItem(String token, String itemId){
             var client = new RestClient("http://51.254.117.45:3000/");
@@ -80,21 +106,12 @@ namespace GestionLaboIot.Pages
 
         }
 
+=======
+>>>>>>> 9c21eb76d9a1f1ecf3aeb3f2bcc79b8d79f6f6ac
 		private async void Button_Retour_ClickedAsync(object sender, EventArgs e)
 		{
 			await Navigation.PopModalAsync();
 		}
-
-		private void Button_plus_Clicked(object sender, EventArgs e)
-		{
-			//Faire +1 sur le label quantité (et donc -1 sur la quantité restante)
-		}
-
-		private void Button_minus_Clicked(object sender, EventArgs e)
-		{
-			//Faire -1 sur le label quantité (et donc +1 sur la quantité restante)
-		}
-
 		private async void Button_Valid_ClickedAsync(object sender, EventArgs e)
 		{
 			var nouveauScan = await DisplayAlert("Envoyé", "Données envoyées. Voulez-vous scanner un autre objet ?","Oui","Non");
