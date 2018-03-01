@@ -60,7 +60,6 @@ namespace GestionLaboIot.Pages
 
 		private async void Button_Retour_ClickedAsync(object sender, EventArgs e)
 		{
-            Application.Current.Properties["userEmail"] = entry_Mail.Text;
 			await Navigation.PopModalAsync();
 		}
 
@@ -74,7 +73,7 @@ namespace GestionLaboIot.Pages
 				{
 					if (entry_Mail.Text.EndsWith("ynov.com")) //test si domaine = ynov.com
 					{
-						Application.Current.Properties["user_email"] = entry_Mail.ToString();
+						Application.Current.Properties["user_mail"] = entry_Mail.Text;
 						await Navigation.PushModalAsync(new StudentChoice());
 					}
 					else

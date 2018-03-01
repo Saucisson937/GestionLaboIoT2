@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ZXing.Net.Mobile.Forms;
+using GestionLaboIot.Models;
 
 namespace GestionLaboIot.Pages
 {
@@ -15,6 +16,7 @@ namespace GestionLaboIot.Pages
 	public partial class RecapScan : ContentPage
 	{
 		ZXingScannerPage scanPage;
+		Emprunt emprunt = new Emprunt();
 		public RecapScan ()
 		{
 
@@ -32,15 +34,20 @@ namespace GestionLaboIot.Pages
 				label_sousCateg.Text = StudentChoice.item.SousCategorie.Nom;
 				if (Application.Current.Properties["isEmprunt"].ToString() == "true")
 				{
-					stepper.Maximum = Convert.ToInt32(StudentChoice.item.Quantite);					
+					stepper.Maximum = Convert.ToInt32(StudentChoice.item.Quantite);
+					if (!StudentChoice.newEmprunt)
+					{
+						DisplayAlert("Attention", "Vous en avez déjà emprunter" + StudentChoice.emprunt.quantite , "OK"); 
+						stepper.Minimum = Convert.ToInt32(StudentChoice.emprunt.quantite);
+					}
 				}
 				else
 				{
 					stepper.Maximum = Convert.ToInt32(StudentChoice.emprunt.quantite);
+					stepper.Minimum = 1;
 					picker_etatObject.SelectedItem = StudentChoice.emprunt.etat;
 				}
-				//emprunt.item = Application.Current.Properties["token"].ToString();
-				
+				//emprunt.item = Application.Current.Properties["token"].ToString();	
 			}
 
             else
@@ -52,8 +59,7 @@ namespace GestionLaboIot.Pages
         private void OnStepperValueChanged(object sender, ValueChangedEventArgs e)
         {
             label_numberObjectSelect.Text =  e.NewValue.ToString();
-	}
-
+		}
 
         private async void Button_LogOut_ClickedAsync(object sender, EventArgs e)
 		{
@@ -71,39 +77,71 @@ namespace GestionLaboIot.Pages
 		}
 		private async void Button_Valid_ClickedAsync(object sender, EventArgs e)
 		{
-			var nouveauScan = await DisplayAlert("Envoyé", "Données envoyées. Voulez-vous scanner un autre objet ?","Oui","Non");
+			bool nouveauScan = false;
+			bool flag = false;
 
-
-			//CODE ENVOIE DONNEE
-
-
-			if (nouveauScan)
+			if(StudentChoice.newEmprunt)
 			{
-				scanPage = new ZXingScannerPage();
-				scanPage.OnScanResult += (result) => {
-					scanPage.IsScanning = false;
+				var client = new RestClient("http://10.92.1.230:3000");
+				var request = new RestRequest("emprunts/create", Method.PUT);
 
-					Device.BeginInvokeOnMainThread(() => {
-						Navigation.PopModalAsync();
-						Navigation.PushModalAsync(new RecapScan());
-					});
-				};
-				await Navigation.PushModalAsync(scanPage);
+				request.AddHeader("x-access-token", Application.Current.Properties["token"].ToString());
+				request.AddParameter("item", Application.Current.Properties["itemId"].ToString());
+				request.AddParameter("user_mail", Application.Current.Properties["user_mail"].ToString());
+				request.AddParameter("etat", picker_etatObject.SelectedItem.ToString());
+				request.AddParameter("quantite", label_numberObjectSelect.Text);
+				IRestResponse response = client.Execute(request);
+				emprunt = JsonConvert.DeserializeObject<Emprunt>(response.Content);
+
+				if(emprunt._id != null && emprunt._id.Length > 1)
+				{
+					flag = true;					
+				}
 			}
 			else
 			{
-				await Navigation.PushModalAsync(new StudentMail());
+				var client = new RestClient("http://10.92.1.230:3000");
+				var request = new RestRequest("emprunts/{id}", Method.POST);
+
+				request.AddHeader("x-access-token", Application.Current.Properties["token"].ToString());
+				request.AddUrlSegment("id", StudentChoice.emprunt._id);
+				request.AddParameter("isEmprunt", Application.Current.Properties["isEmprunt"].ToString());
+				request.AddParameter("etat", picker_etatObject.SelectedItem.ToString());
+				request.AddParameter("quantite", label_numberObjectSelect.Text);
+				IRestResponse response = client.Execute(request);
+				
+				if (response.IsSuccessful)
+				{
+					flag = true;
+				}
+			}
+
+			if (flag)
+			{
+				nouveauScan = await DisplayAlert("Envoyé", "Données envoyées. Voulez-vous scanner un autre objet ?", "Oui", "Non");
+				if (nouveauScan)
+				{
+					//scanPage = new ZXingScannerPage();
+					//scanPage.OnScanResult += (result) => {
+					//	scanPage.IsScanning = false;
+
+					//	Device.BeginInvokeOnMainThread(() => {
+					//		Navigation.PopModalAsync();
+					//		Navigation.PushModalAsync(new RecapScan());
+					//	});
+					//};
+					//await Navigation.PushModalAsync(scanPage);
+					await Navigation.PushModalAsync(new StudentChoice());
+				}
+				else
+				{
+					await Navigation.PushModalAsync(new StudentMail());
+				}
+			}
+			else
+			{
+				await DisplayAlert("Attention", "Une erreur est survenue lors de l'envoie des données", "OK");
 			}			
 		}
-		//public class Emprunt
-		//{
-		//	public string user_mail { get; set; }
-		//	public string item { get; set; }
-		//	public string dateStart { get; set; }
-		//	public string dateEnd { get; set; }
-		//	public string etat { get; set; }
-		//	public string quantite { get; set; }
-		//}
-
 	}
 }

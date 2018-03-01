@@ -42,7 +42,7 @@ namespace GestionLaboIot
             if (!String.IsNullOrEmpty(email.Trim()) && !String.IsNullOrEmpty(password) &&
                 Regex.Match(email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$").Success )
 			{
-				var client = new RestClient("http://51.254.117.45:3000/");
+				var client = new RestClient("http://10.92.1.230:3000/");
 				var request = new RestRequest("authenticate", Method.POST);
 				request.AddParameter("email", email);
 				request.AddParameter("password", password);
