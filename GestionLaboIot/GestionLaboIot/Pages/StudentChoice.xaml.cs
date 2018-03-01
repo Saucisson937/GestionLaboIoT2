@@ -95,21 +95,7 @@ namespace GestionLaboIot.Pages
 					Device.BeginInvokeOnMainThread(() =>
 					{
 						Navigation.PopModalAsync();
-<<<<<<< HEAD
-						//DisplayAlert("Scanned Barcode", result.Text, "OK");
 
-						Navigation.PushModalAsync(new RecapScan());
-					});
-				};
-				await Navigation.PushModalAsync(scanPage);
-			}
-			catch (Exception ex)
-			{
-				await DisplayAlert("Erreur", ex.ToString(), "OK");
-			}			
-		}
-=======
->>>>>>> 9c21eb76d9a1f1ecf3aeb3f2bcc79b8d79f6f6ac
 
 						var client = new RestClient("http://51.254.117.45:3000/");
 						var request = new RestRequest("items/{id}", Method.GET);
