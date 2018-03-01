@@ -15,7 +15,6 @@ namespace GestionLaboIot.Pages
 	public partial class RecapScan : ContentPage
 	{
 		ZXingScannerPage scanPage;
-		Emprunt emprunt = new Emprunt();
 		public RecapScan ()
 		{
 
