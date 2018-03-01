@@ -18,6 +18,7 @@ namespace GestionLaboIot.Pages
 		Emprunt emprunt = new Emprunt();
 		public RecapScan ()
 		{
+
             if (Application.Current.Properties.ContainsKey("token"))
             {
                 InitializeComponent();				
@@ -42,6 +43,7 @@ namespace GestionLaboIot.Pages
 				//emprunt.item = Application.Current.Properties["token"].ToString();
 				
 			}
+
             else
             {
                 Navigation.PushModalAsync(new Login());
@@ -49,9 +51,10 @@ namespace GestionLaboIot.Pages
 		}
 
         private void OnStepperValueChanged(object sender, ValueChangedEventArgs e)
-        {			
-			label_numberObjectSelect.Text = e.NewValue.ToString();            
-        }
+        {
+            label_numberObjectSelect.Text =  e.NewValue.ToString();
+	}
+
 
         private async void Button_LogOut_ClickedAsync(object sender, EventArgs e)
 		{

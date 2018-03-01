@@ -38,9 +38,9 @@ namespace GestionLaboIot
 
         public void Authenticate(string email, string password)
         {
-			email = email.Replace(" ", "");
-			if (!String.IsNullOrEmpty(email) && !String.IsNullOrEmpty(password) &&
-				Regex.Match(email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$").Success)
+
+            if (!String.IsNullOrEmpty(email.Trim()) && !String.IsNullOrEmpty(password) &&
+                Regex.Match(email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$").Success )
 			{
 				var client = new RestClient("http://51.254.117.45:3000/");
 				var request = new RestRequest("authenticate", Method.POST);
@@ -52,21 +52,18 @@ namespace GestionLaboIot
 				IRestResponse response = client.Execute(request);
 				LoginToken loginToken = JsonConvert.DeserializeObject<LoginToken>(response.Content);
 
+
 				if (loginToken.token != null)
 				{
 					Application.Current.Properties["token"] = loginToken.token;
-					Navigation.PushModalAsync(new StudentMail());
-				}
-				else
-				{
+                    Navigation.PushModalAsync(new StudentMail());
+				} else {
 					DisplayAlert("Authenfication échouée !", "Les informations saisies sont incorrects", "Fermer");
-				};
-			}
-			else
-			{
+				}
+			} else {
 				DisplayAlert("Attention", "Veuillez saisir correctement les champs", "Fermer");
 			}
-			//Navigation.PushModalAsync(new StudentMail());
-        }
+
+        	}
 	}
 }

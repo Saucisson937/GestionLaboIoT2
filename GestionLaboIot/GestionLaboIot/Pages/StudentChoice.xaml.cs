@@ -99,8 +99,8 @@ namespace GestionLaboIot.Pages
 					Device.BeginInvokeOnMainThread(() =>
 					{
 						Navigation.PopModalAsync();
-
 						Application.Current.Properties["isEmprunt"] = true;
+
 						var client = new RestClient("http://51.254.117.45:3000/");
 						var request = new RestRequest("items/{id}", Method.GET);
 
